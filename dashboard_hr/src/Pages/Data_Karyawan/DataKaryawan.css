@@ -50,8 +50,8 @@
 }
 
 /* Button */
-.btn-primary {
-    background-color: var(--color-primary);
+.btn-primary-data {
+    background-color: #2a60df;
     color: white;
     padding: 0.75rem 1.25rem;
     border: none;
@@ -66,13 +66,28 @@
 }
 
 /* Card Wrapper (menggunakan class dashboard-card yang sama) */
-.employee-table-container {
+.data-table-container {
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     background-color: var(--color-card-background);
     border: 1px solid var(--color-border);
-    overflow-x: auto; /* Untuk responsivitas tabel */
+    overflow-x: auto;
+
+}
+
+
+
+.dropdowns select {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+    background-color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 20px;
 }
 
 /* Tabel Karyawan */
@@ -154,3 +169,5 @@
     background-color: #fee2e2; /* Light red */
     color: var(--color-danger);
 }
+
+/* Icon Buttons for Edit and Delete */

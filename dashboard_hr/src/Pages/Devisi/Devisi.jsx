@@ -33,7 +33,7 @@ const Devisi = () => {
             <h1>Data Divisi</h1>
             <p className="page-subtitle">Kelola daftar semua divisi dan penanggung jawab di perusahaan.</p>
         </div>
-        <button className="btn-primary">
+        <button className="btn-primary-divisi">
           + Tambah Divisi
         </button>
       </header>

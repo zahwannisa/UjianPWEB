@@ -14,25 +14,24 @@ import {
 const DataKaryawan = () => {
   return (
     <div className="dashboard-container">  
-      <main className="main-content">
+      <main className="main-content1">
         
         <div className="content-wrapper">
           <div className="page-header">
             <div>
               <h1>Data Karyawan</h1>
-              <p>Kelola data dan informasi karyawan</p>
+              <p className="page-subtitle">Kelola data dan informasi karyawan</p>
             </div>
-            <button className="btn-primary">
-              <Plus size={16} /> Tambah Karyawan
+            <button className="btn-primary-data">
+              + Tambah Karyawan
             </button>
           </div>
 
           <div className="card">
             {/* Filters */}
             <div className="filter-section">
-              <div className="search-input-wrapper">
-                <Search size={18} className="search-icon-sm" />
-                <input type="text" placeholder="Cari nama, ID, atau jabatan..." />
+              <div className="search-input1">
+                <input type="text" className="search-input" placeholder="Cari nama, ID, atau jabatan..." />
               </div>
               <div className="dropdowns">
                 <select><option>Semua Divisi</option></select>
@@ -41,12 +40,13 @@ const DataKaryawan = () => {
             </div>
 
             {/* Table */}
-            <div className="table-responsive">
+            <div className="data-table-container dashboard-card">
               <table className="employee-table">
                 <thead>
                   <tr>
                     <th>ID Karyawan</th>
-                    <th>Foto & Nama Lengkap</th>
+                    <th>Nama Lengkap</th>
+                    <th>Email</th>
                     <th>Jabatan</th>
                     <th>Divisi</th>
                     <th>Tanggal Masuk</th>
@@ -60,13 +60,12 @@ const DataKaryawan = () => {
                       <td className="emp-id">{emp.id}</td>
                       <td>
                         <div className="user-cell">
-                          <img src={emp.avatar} alt={emp.name} />
                           <div>
                             <strong>{emp.name}</strong>
-                            <span>{emp.email}</span>
                           </div>
                         </div>
                       </td>
+                      <td>{emp.email}</td>
                       <td>{emp.role}</td>
                       <td>{emp.department}</td>
                       <td>{emp.joinDate}</td>
@@ -76,10 +75,8 @@ const DataKaryawan = () => {
                         </span>
                       </td>
                       <td>
-                        <div className="actions">
-                          <button className="icon-btn"><Edit2 size={16} /></button>
-                          <button className="icon-btn"><Trash2 size={16} /></button>
-                        </div>
+                          <button className="btn-action edit">Edit</button>
+                          <button className="btn-action delete">Hapus</button>
                       </td>
                     </tr>
                   ))}

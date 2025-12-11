@@ -7,7 +7,7 @@ import './App.css';
 import Index from './Pages/Index/Index';
 import DataKaryawan from './Pages/Data_Karyawan/DataKaryawan';
 import Devisi from './Pages/Devisi/Devisi';
-import Cuti from './Pages/Cuti/cuti';
+import Cuti from './Pages/Cuti/Cuti';
 import Gaji from './Pages/Gaji/Gaji';
 
 function App() {

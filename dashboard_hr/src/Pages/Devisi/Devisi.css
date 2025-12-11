@@ -47,8 +47,8 @@
 }
 
 /* Button */
-.btn-primary {
-    background-color: var(--color-primary);
+.btn-primary-divisi {
+    background-color: #2a60df;
     color: white;
     padding: 0.75rem 1.25rem;
     border: none;

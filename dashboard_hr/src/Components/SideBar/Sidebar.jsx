@@ -17,12 +17,11 @@ const Sidebar = () => {
     { path: '/devisi', name: 'Divisi', icon: <Building2 size={18} /> },
     { path: '/gaji', name: 'Gaji', icon: <CreditCard size={18} /> },
     { path: '/cuti', name: 'Cuti', icon: <Calendar size={18} /> },
-    { path: '/settings', name: 'Pengaturan', icon: <Settings size={18} /> },
   ];
 
   return (
-    <aside className="sidebar">
-      <div className="sidebar-header">
+    <aside className="sidebar_og">
+      <div className="sidebar-header_og">
         <div className="logo-text">
           <h2>HRIS System</h2>
           <span>Manajemen Karyawan</span>

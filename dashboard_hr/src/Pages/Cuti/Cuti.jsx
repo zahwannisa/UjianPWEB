@@ -33,7 +33,7 @@ const Cuti = () => {
             <h1>Pengajuan Cuti</h1>
             <p className="page-subtitle">Kelola pengajuan cuti dan lihat riwayat status cuti Anda.</p>
         </div>
-        <button className="btn-primary">
+        <button className="btn-primary-cuti">
           + Ajukan Cuti Baru
         </button>
       </header>

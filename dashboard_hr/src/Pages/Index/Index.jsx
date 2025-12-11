@@ -105,7 +105,7 @@ const Index = () => {
       <header className="page-top">
         <div>
           <h1>Dashboard</h1>
-          <p className="subtitle">{`Selamat datang kembali, ${userName}`}</p>
+          <p className="subtitle-1">{`Selamat datang kembali, ${userName}`}</p>
         </div>
       </header>
 

@@ -42,7 +42,7 @@ const Gaji = () => {
             <h1>Data Gaji Karyawan</h1>
             <p className="page-subtitle">Kelola dan lihat riwayat penggajian karyawan per periode.</p>
         </div>
-        <button className="btn-primary">
+        <button className="btn-primary-gaji">
           + Proses Gaji Baru
         </button>
       </header>
