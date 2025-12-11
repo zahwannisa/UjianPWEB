@@ -1,0 +1,80 @@
+/* src/Components/Card/Card.css */
+
+/* --- Variabel Warna (Jika tidak diimpor dari global) --- */
+:root {
+  --color-primary: #38bdf8;  
+  --color-success: #10b981;  
+  --color-info: #f97316;     
+  --color-warning: #f59e0b;   
+  --color-card-background: #ffffff;
+  --color-border: #e5e7eb;
+  --color-text-secondary: #6b7280;
+}
+
+/* --- Base Card Styling --- */
+.stat-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-radius: 8px; 
+  background-color: var(--color-card-background);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--color-border);
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-height: 100px;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card__title {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 0.25rem 0;
+}
+
+.stat-card__value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* --- Icon Wrapper --- */
+.stat-card__icon-wrapper {
+  /* Ikon berada di kanan */
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: flex-end; /* Posisikan di akhir */
+}
+
+/* Gaya dasar ikon */
+.icon-placeholder {
+    font-size: 1.8rem;
+    line-height: 1;
+}
+
+/* --- Varian Warna --- */
+
+/* Primary (Biru) */
+.stat-card--primary .icon-placeholder {
+  color: var(--color-primary);
+}
+
+/* Success (Hijau) */
+.stat-card--success .icon-placeholder {
+  color: var(--color-success);
+}
+
+/* Info (Orange) */
+.stat-card--info .icon-placeholder {
+  color: var(--color-info);
+}
+
+/* Warning (Kuning/Orange) */
+.stat-card--warning .icon-placeholder {
+  color: var(--color-warning);
+}
