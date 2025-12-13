@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAddEmployee } from '../../Logic/tambahKaryawan';
-import { UploadCloud } from 'lucide-react'; // Ikon untuk upload
+import { fetchDivisi } from '../../utils/api';
 import './TambahKaryawan.css';
 
 const TambahKaryawan = ({ onClose, onSuccess }) => {
   const { step, formData, loading, handleChange, nextStep, prevStep, submitForm } = useAddEmployee(onClose, onSuccess);
+  const [divisiList, setDivisiList] = useState([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const divisiData = await fetchDivisi();
+        setDivisiList(divisiData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    loadData();
+  }, []);
 
   return (
     <div className="wizard-container">
@@ -34,38 +47,17 @@ const TambahKaryawan = ({ onClose, onSuccess }) => {
                 <input name="nama_lengkap" value={formData.nama_lengkap} onChange={handleChange} required placeholder="Masukkan nama lengkap" />
               </div>
               <div className="form-group">
-                <label>NIK / KTP <span className="text-red">*</span></label>
-                <input name="nik" value={formData.nik} onChange={handleChange} required placeholder="16 digit NIK" />
-              </div>
-              <div className="form-group">
-                <label>Tempat Lahir <span className="text-red">*</span></label>
-                <input name="tempat_lahir" value={formData.tempat_lahir} onChange={handleChange} required placeholder="Jakarta" />
-              </div>
-              <div className="form-group">
-                <label>Tanggal Lahir <span className="text-red">*</span></label>
-                <input type="date" name="tanggal_lahir" value={formData.tanggal_lahir} onChange={handleChange} required />
-              </div>
-              <div className="form-group">
                 <label>Email <span className="text-red">*</span></label>
                 <input type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="nama@company.com" />
               </div>
               <div className="form-group">
-                <label>Nomor HP <span className="text-red">*</span></label>
-                <input name="no_telepon" value={formData.no_telepon} onChange={handleChange} required placeholder="+62 812-3456-7890" />
+                <label>No. Telepon <span className="text-red">*</span></label>
+                <input name="no_telepon" value={formData.no_telepon} onChange={handleChange} required placeholder="0812-3456-7890" />
               </div>
-              
-              {/* Upload Foto Area */}
-              
-              {/* <div className="form-group full-width">
-                <label>Upload Foto Profil</label>
-                <div className="upload-box">
-                  <div className="upload-placeholder">
-                    <div className="upload-icon-circle"><UploadCloud size={24}/></div>
-                    <span>Klik untuk upload atau drag & drop</span>
-                    <small>Format: JPG, PNG. Maksimal 2MB</small>
-                  </div>
-                </div>
-              </div> */}
+              <div className="form-group">
+                <label>Tanggal Masuk <span className="text-red">*</span></label>
+                <input type="date" name="tanggal_masuk" value={formData.tanggal_masuk} onChange={handleChange} required />
+              </div>
             </div>
           )}
 
@@ -73,37 +65,22 @@ const TambahKaryawan = ({ onClose, onSuccess }) => {
           {step === 2 && (
             <div className="form-grid">
               <div className="form-group">
-                <label>Jabatan <span className="text-red">*</span></label>
-                <input name="jabatan" value={formData.jabatan} onChange={handleChange} required placeholder="Senior Developer" />
-              </div>
-              <div className="form-group">
                 <label>Divisi <span className="text-red">*</span></label>
                 <select name="id_divisi" value={formData.id_divisi} onChange={handleChange} required>
                   <option value="">Pilih Divisi</option>
-                  <option value="1">Engineering</option>
-                  <option value="2">Sales</option>
-                  <option value="3">Marketing</option>
-                  <option value="4">Design</option>
-                  <option value="5">Finance</option>
-                  <option value="6">HR</option>
+                  {divisiList.map((div) => (
+                    <option key={div.id} value={div.id}>{div.nama_divisi}</option>
+                  ))}
                 </select>
               </div>
               <div className="form-group">
-                <label>Jenis Kepegawaian <span className="text-red">*</span></label>
-                <select name="jenis_kepegawaian" value={formData.jenis_kepegawaian} onChange={handleChange} required>
-                  <option value="">Pilih Jenis</option>
-                  <option value="Full Time">Full Time</option>
-                  <option value="Part Time">Part Time</option>
-                  <option value="Contract">Contract</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label>Tanggal Masuk <span className="text-red">*</span></label>
-                <input type="date" name="tanggal_masuk" value={formData.tanggal_masuk} onChange={handleChange} required />
+                <label>Jabatan <span className="text-red">*</span></label>
+                <input name="jabatan" value={formData.jabatan} onChange={handleChange} required placeholder="Senior Staff" />
               </div>
               <div className="form-group full-width">
                 <label>Status Karyawan <span className="text-red">*</span></label>
-                <select name="status" value={formData.status} onChange={handleChange}>
+                <select name="status" value={formData.status} onChange={handleChange} required>
+                  <option value="">Pilih Status</option>
                   <option value="Aktif">Aktif</option>
                   <option value="Cuti">Cuti</option>
                   <option value="Tidak Aktif">Tidak Aktif</option>
@@ -117,23 +94,15 @@ const TambahKaryawan = ({ onClose, onSuccess }) => {
             <div className="form-grid">
               <div className="form-group">
                 <label>Gaji Pokok <span className="text-red">*</span></label>
-                <input type="number" name="gaji_pokok" value={formData.gaji_pokok} onChange={handleChange} required placeholder="Rp 5.000.000" />
+                <input type="number" name="gaji_pokok" value={formData.gaji_pokok} onChange={handleChange} required placeholder="6000000" min="0" />
               </div>
               <div className="form-group">
-                <label>Tunjangan <span className="text-red">*</span></label>
-                <input type="number" name="tunjangan" value={formData.tunjangan} onChange={handleChange} placeholder="Rp 1.000.000" />
+                <label>Tunjangan</label>
+                <input type="number" name="tunjangan" value={formData.tunjangan} onChange={handleChange} placeholder="1000000" min="0" />
               </div>
               <div className="form-group">
-                <label>Asuransi Kesehatan <span className="text-red">*</span></label>
-                <select name="asuransi" value={formData.asuransi} onChange={handleChange}>
-                  <option value="">Pilih Asuransi</option>
-                  <option value="BPJS">BPJS Kesehatan</option>
-                  <option value="Swasta">Asuransi Swasta</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label>Nomor Rekening <span className="text-red">*</span></label>
-                <input name="nomor_rekening" value={formData.nomor_rekening} onChange={handleChange} required placeholder="1234567890" />
+                <label>Bonus</label>
+                <input type="number" name="bonus" value={formData.bonus} onChange={handleChange} placeholder="0" min="0" />
               </div>
               
               <div className="summary-card full-width">
@@ -142,7 +111,7 @@ const TambahKaryawan = ({ onClose, onSuccess }) => {
                   <div><small>Nama:</small> <br/> <strong>{formData.nama_lengkap || '-'}</strong></div>
                   <div><small>Email:</small> <br/> <strong>{formData.email || '-'}</strong></div>
                   <div><small>Jabatan:</small> <br/> <strong>{formData.jabatan || '-'}</strong></div>
-                  <div><small>Divisi:</small> <br/> <strong>{formData.id_divisi || '-'}</strong></div>
+                  <div><small>Gaji Pokok:</small> <br/> <strong>{formData.gaji_pokok ? `Rp ${Number(formData.gaji_pokok).toLocaleString('id-ID')}` : '-'}</strong></div>
                 </div>
               </div>
             </div>

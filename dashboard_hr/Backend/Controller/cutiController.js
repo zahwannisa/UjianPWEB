@@ -110,14 +110,31 @@ export const updateStatusCuti = async (req, res) => {
   const { status } = req.body; // 'Disetujui', 'Menunggu', 'Ditolak'
 
   try {
-    const [result] = await db.query(
+    // Ambil data cuti ini
+    const [cutiRows] = await db.query(`SELECT id_karyawan FROM tabel_cuti WHERE id = ?`, [id]);
+    
+    if (cutiRows.length === 0) {
+      return res.status(404).json({ message: 'Data cuti tidak ditemukan' });
+    }
+
+    const id_karyawan = cutiRows[0].id_karyawan;
+
+    // Update status cuti
+    await db.query(
       `UPDATE tabel_cuti SET status = ? WHERE id = ?`,
       [status, id]
     );
 
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ message: 'Data cuti tidak ditemukan' });
+    // Jika ditolak, kembalikan status karyawan ke 'Aktif' (jika sedang cuti)
+    if (status === 'Ditolak') {
+      await db.query(
+        `UPDATE tabel_karyawan SET status = 'Aktif' WHERE id = ? AND status = 'Cuti'`,
+        [id_karyawan]
+      );
     }
+    
+    // Note: Jika disetujui, status karyawan akan di-update oleh syncCutiStatus
+    // berdasarkan tanggal_mulai dan tanggal_selesai
 
     res.status(200).json({ message: `Status cuti berhasil diubah ke ${status}!` });
   } catch (error) {

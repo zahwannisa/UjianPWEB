@@ -5,15 +5,14 @@ export const useAddEmployee = (onClose, onSuccess) => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  // State awal mencakup semua field dari 3 gambar desain
+  // State awal sesuai spesifikasi form
   const [formData, setFormData] = useState({
-    // Step 1
-    nama_lengkap: '', nik: '', tempat_lahir: '', tanggal_lahir: '',
-    email: '', no_telepon: '', foto_profil: null,
-    // Step 2
-    jabatan: '', id_divisi: '', jenis_kepegawaian: '', tanggal_masuk: '', status: 'Aktif',
-    // Step 3
-    gaji_pokok: '', tunjangan: '', asuransi: '', nomor_rekening: ''
+    // Step 1: Informasi Pribadi
+    nama_lengkap: '', email: '', no_telepon: '', tanggal_masuk: '',
+    // Step 2: Posisi & Jabatan
+    id_divisi: '', jabatan: '', status: '',
+    // Step 3: Kompensasi (Gaji)
+    gaji_pokok: '', tunjangan: '', bonus: ''
   });
 
   const handleChange = (e) => {

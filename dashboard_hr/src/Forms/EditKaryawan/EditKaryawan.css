@@ -1,0 +1,90 @@
+.edit-karyawan-form {
+  padding: 1rem;
+}
+
+.edit-karyawan-form .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.edit-karyawan-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.edit-karyawan-form .form-group label {
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+.edit-karyawan-form .form-group .text-red {
+  color: #ef4444;
+}
+
+.edit-karyawan-form .form-group input,
+.edit-karyawan-form .form-group select {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.edit-karyawan-form .form-group input:focus,
+.edit-karyawan-form .form-group select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.edit-karyawan-form .form-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.edit-karyawan-form .btn-outline {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid #e5e7eb;
+  background: white;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.edit-karyawan-form .btn-outline:hover {
+  background: #f9fafb;
+}
+
+.edit-karyawan-form .btn-primary {
+  padding: 0.75rem 1.5rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.edit-karyawan-form .btn-primary:hover {
+  background: #2563eb;
+}
+
+.edit-karyawan-form .btn-primary:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .edit-karyawan-form .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

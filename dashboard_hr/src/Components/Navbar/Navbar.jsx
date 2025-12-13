@@ -1,18 +1,11 @@
 import React from 'react';
-import { Search, Bell } from 'lucide-react';
+import { Bell } from 'lucide-react';
 import './navbar.css'; // Import CSS terpisah
 
 const Navbar = () => {
   return (
     <header className="top-navbar">
-      <div className="search-container">
-        <Search size={18} className="search-icon" />
-        <input 
-          type="text" 
-          placeholder="Search employees..." 
-          className="search-input"
-        />
-      </div>
+      <div className="navbar-left"></div>
 
       <div className="navbar-right">
         <button className="icon-btn-ghost">

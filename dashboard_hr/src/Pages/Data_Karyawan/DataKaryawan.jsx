@@ -1,17 +1,27 @@
 // src/Pages/Data_Karyawan/DataKaryawan.jsx
 import React, { useState, useEffect } from 'react';
 import './DataKaryawan.css';
-import { fetchKaryawan, deleteKaryawan, formatEmployeeId, formatDate } from '../../utils/api';
+import { fetchKaryawan, fetchDivisi, deleteKaryawan, formatEmployeeId, formatDate } from '../../utils/api';
 import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Import Komponen Modal dan Form
 import Model from '../../Components/model/model';
 import TambahKaryawan from '../../Forms/Tambah_Karyawan/TambahKaryawan';
+import EditKaryawan from '../../Forms/EditKaryawan/EditKaryawan';
+import { toast } from 'sonner';
 
 const DataKaryawan = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedKaryawan, setSelectedKaryawan] = useState(null);
   const [karyawanList, setKaryawanList] = useState([]);
+  const [divisiList, setDivisiList] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  // Filter states
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterDivisi, setFilterDivisi] = useState('');
+  const [filterStatus, setFilterStatus] = useState('');
 
   // Fetch data saat komponen dimuat
   const loadKaryawan = async () => {
@@ -21,17 +31,40 @@ const DataKaryawan = () => {
     setLoading(false);
   };
 
+  const loadDivisi = async () => {
+    const data = await fetchDivisi();
+    setDivisiList(data);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
-      await loadKaryawan();
+      await Promise.all([loadKaryawan(), loadDivisi()]);
     };
     fetchData();
   }, []);
+
+  // Filter karyawan
+  const filteredKaryawan = karyawanList.filter((emp) => {
+    const matchSearch = 
+      emp.nama_lengkap?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      emp.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      emp.jabatan?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchDivisi = filterDivisi === '' || emp.id_divisi == filterDivisi;
+    const matchStatus = filterStatus === '' || emp.status === filterStatus;
+    return matchSearch && matchDivisi && matchStatus;
+  });
+
+  // Handle edit karyawan
+  const handleEdit = (emp) => {
+    setSelectedKaryawan(emp);
+    setIsEditModalOpen(true);
+  };
 
   // Handle hapus karyawan
   const handleDelete = async (id) => {
     if (window.confirm('Yakin ingin menghapus karyawan ini?')) {
       await deleteKaryawan(id);
+      toast.success('Karyawan berhasil dihapus');
       loadKaryawan(); // Refresh data
     }
   };
@@ -56,11 +89,27 @@ const DataKaryawan = () => {
             {/* ... Bagian Filter dan Dropdown Tetap Sama ... */}
             <div className="filter-section">
               <div className="search-input1">
-                <input type="text" className="search-input" placeholder="Cari nama, ID, atau jabatan..." />
+                <input 
+                  type="text" 
+                  className="search-input" 
+                  placeholder="Cari nama, email, atau jabatan..." 
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
               </div>
               <div className="dropdowns">
-                <select><option>Semua Divisi</option></select>
-                <select><option>Semua Status</option></select>
+                <select value={filterDivisi} onChange={(e) => setFilterDivisi(e.target.value)}>
+                  <option value="">Semua Divisi</option>
+                  {divisiList.map((div) => (
+                    <option key={div.id} value={div.id}>{div.nama_divisi}</option>
+                  ))}
+                </select>
+                <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
+                  <option value="">Semua Status</option>
+                  <option value="Aktif">Aktif</option>
+                  <option value="Cuti">Cuti</option>
+                  <option value="Tidak Aktif">Tidak Aktif</option>
+                </select>
               </div>
             </div>
 
@@ -82,10 +131,10 @@ const DataKaryawan = () => {
                 <tbody>
                   {loading ? (
                     <tr><td colSpan="8" style={{textAlign: 'center'}}>Loading...</td></tr>
-                  ) : karyawanList.length === 0 ? (
-                    <tr><td colSpan="8" style={{textAlign: 'center'}}>Belum ada data karyawan</td></tr>
+                  ) : filteredKaryawan.length === 0 ? (
+                    <tr><td colSpan="8" style={{textAlign: 'center'}}>Tidak ada data karyawan</td></tr>
                   ) : (
-                    karyawanList.map((emp) => (
+                    filteredKaryawan.map((emp) => (
                       <tr key={emp.id}>
                         <td className="emp-id">{formatEmployeeId(emp.id)}</td>
                         <td>
@@ -103,7 +152,7 @@ const DataKaryawan = () => {
                           </span>
                         </td>
                         <td>
-                            <button className="btn-action edit">Edit</button>
+                            <button className="btn-action edit" onClick={() => handleEdit(emp)}>Edit</button>
                             <button className="btn-action delete" onClick={() => handleDelete(emp.id)}>Hapus</button>
                         </td>
                       </tr>
@@ -127,7 +176,7 @@ const DataKaryawan = () => {
           </div>
         </div>
 
-        {/* Render Modal */}
+        {/* Render Modal Tambah */}
         <Model 
           isOpen={isModalOpen} 
           onClose={() => setIsModalOpen(false)} 
@@ -135,6 +184,19 @@ const DataKaryawan = () => {
         >
           <TambahKaryawan 
             onClose={() => setIsModalOpen(false)} 
+            onSuccess={loadKaryawan}
+          />
+        </Model>
+
+        {/* Render Modal Edit */}
+        <Model 
+          isOpen={isEditModalOpen} 
+          onClose={() => setIsEditModalOpen(false)} 
+          title="Edit Data Karyawan"
+        >
+          <EditKaryawan 
+            karyawan={selectedKaryawan}
+            onClose={() => setIsEditModalOpen(false)} 
             onSuccess={loadKaryawan}
           />
         </Model>

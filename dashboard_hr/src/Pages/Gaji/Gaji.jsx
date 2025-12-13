@@ -98,7 +98,7 @@ const Gaji = () => {
 
   // Calculate statistics
   const totalPayroll = salaries.reduce((sum, sal) => sum + (sal.gaji_pokok + sal.tunjangan + sal.bonus), 0);
-  const sudahDibayar = salaries.filter(sal => sal.status_pembayaran === 'Sudah Dibayar').length;
+  const sudahDibayar = salaries.filter(sal => sal.status_pembayaran === 'Dibayar').length;
   const pending = salaries.filter(sal => sal.status_pembayaran === 'Pending').length;
   const rataRataGaji = salaries.length > 0 ? Math.round(totalPayroll / salaries.length) : 0;
 

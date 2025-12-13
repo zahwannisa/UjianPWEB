@@ -9,11 +9,20 @@ import divisiRoutes from './Routes/divisiRoutes.js';
 import cutiRoutes from './Routes/cutiRoutes.js';
 import adminRoutes from './Routes/adminRoutes.js';
 
+// Import Utils
+import { syncCutiStatus } from './Utils/syncCutiStatus.js';
+
 dotenv.config();
 const app = express();
 
 app.use(cors());
 app.use(express.json()); // Agar bisa baca JSON dari React
+
+// Sync status cuti saat server start
+syncCutiStatus();
+
+// Sync status cuti setiap 1 menit (untuk production bisa tiap 1 jam)
+setInterval(syncCutiStatus, 60 * 1000);
 
 // API Routes
 app.use('/api/karyawan', karyawanRoutes);

@@ -4,7 +4,7 @@ import db from '../Config/db.js';
 
 // CREATE - Tambah karyawan baru
 export const createKaryawan = async (req, res) => {
-  const { nama_lengkap, email, no_telepon, jabatan, id_divisi, status, tanggal_masuk } = req.body;
+  const { nama_lengkap, email, no_telepon, jabatan, id_divisi, status, tanggal_masuk, gaji_pokok, tunjangan, bonus } = req.body;
 
   const connection = await db.getConnection();
 
@@ -19,11 +19,23 @@ export const createKaryawan = async (req, res) => {
       [nama_lengkap, email, no_telepon, jabatan, id_divisi, status || 'Aktif', tanggal_masuk]
     );
 
+    const karyawanId = resKaryawan.insertId;
+
+    // Insert ke tabel_gaji jika ada data gaji
+    if (gaji_pokok) {
+      await connection.query(
+        `INSERT INTO tabel_gaji 
+        (id_karyawan, gaji_pokok, tunjangan, bonus, status_pembayaran) 
+        VALUES (?, ?, ?, ?, ?)`,
+        [karyawanId, gaji_pokok || 0, tunjangan || 0, bonus || 0, 'Pending']
+      );
+    }
+
     await connection.commit();
 
     res.status(201).json({ 
       message: 'Data karyawan berhasil disimpan!', 
-      id: resKaryawan.insertId 
+      id: karyawanId 
     });
 
   } catch (error) {
