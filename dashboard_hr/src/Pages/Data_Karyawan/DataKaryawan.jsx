@@ -22,7 +22,10 @@ const DataKaryawan = () => {
   };
 
   useEffect(() => {
-    loadKaryawan();
+    const fetchData = async () => {
+      await loadKaryawan();
+    };
+    fetchData();
   }, []);
 
   // Handle hapus karyawan
@@ -44,7 +47,7 @@ const DataKaryawan = () => {
               <p className="page-subtitle">Kelola data dan informasi karyawan</p>
             </div>
             
-            <button className="btn-primary-data" onClick={() => setIsModalOpen(true)}>
+            <button className="btn-primary-data-karyawan" onClick={() => setIsModalOpen(true)}>
               + Tambah Karyawan
             </button>
           </div>
