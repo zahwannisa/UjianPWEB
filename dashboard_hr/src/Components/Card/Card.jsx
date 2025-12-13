@@ -33,7 +33,7 @@ const Clock = (props) => <IoTimeSharp {...props} />;
  */
 const StatCard = ({ title, value, icon: Icon, variant }) => {
   // Tentukan class CSS berdasarkan varian warna yang dipilih
-  const variantClass = `stat-card stat-card--${variant}`;
+  const variantClass = `stat-card stat-card_gaji--${variant}`;
 
   return (
     <div className={variantClass}>

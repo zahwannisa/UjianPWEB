@@ -222,7 +222,7 @@
 
 @media (min-width: 1024px) { /* lg: breakpoint */
   .charts-row {
-    grid-template-columns: repeat(3, 1fr); /* lg:grid-cols-3 */
+    grid-template-columns: repeat(2, 1fr); /* lg:grid-cols-3 */
   }
   /* lg:col-span-2 untuk EmployeeChart */
   .employee-chart-area {
