@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import './cuti.css'; 
-import { fetchCuti, deleteCuti, updateStatusCuti, formatCutiId, formatDate } from '../../utils/api';
+import { fetchCuti, deleteCuti, updateStatusCuti, formatCutiId, formatDate, } from '../../utils/api';
 
 const Cuti = () => {
   const [requests, setRequests] = useState([]);
@@ -25,6 +25,12 @@ const Cuti = () => {
     setSearchTerm(event.target.value);
   };
 
+  const handleCancel = async (id) => {
+    if (window.confirm('Yakin ingin membatalkan pengajuan cuti ini?')) {
+      await deleteCuti(id);
+      loadCuti();
+    }
+  };
 
   const handleApprove = async (id) => {
     await updateStatusCuti(id, 'Disetujui');
