@@ -10,8 +10,10 @@ import EmployeeChart from '../../Components/charts/EmployeeChart';
 const Index = () => {
   const [stats, setStats] = useState({
     totalEmployees: 0,
+    activeEmployees: 0,
     newThisMonth: 0,
     onLeave: 0,
+    inactiveEmployees: 0,
     pendingApprovals: 0
   });
   const [upcomingLeave, setUpcomingLeave] = useState([]);
@@ -100,7 +102,7 @@ const Index = () => {
             <div className="activity-list">
               <div className="activity-list-item">
                 <div className="activity-description">Total Karyawan Aktif</div>
-                <span className="activity-time">{stats.totalEmployees} orang</span>
+                <span className="activity-time">{stats.activeEmployees} orang</span>
               </div>
               <div className="activity-list-item">
                 <div className="activity-description">Pengajuan Cuti Pending</div>
@@ -109,6 +111,10 @@ const Index = () => {
               <div className="activity-list-item">
                 <div className="activity-description">Karyawan Sedang Cuti</div>
                 <span className="activity-time">{stats.onLeave} orang</span>
+              </div>
+              <div className="activity-list-item">
+                <div className="activity-description">Karyawan Tidak Aktif</div>
+                <span className="activity-time">{stats.inactiveEmployees} orang</span>
               </div>
             </div>
           </div>

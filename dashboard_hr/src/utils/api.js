@@ -204,7 +204,9 @@ export const fetchDashboardStats = async () => {
     ]);
 
     const totalEmployees = karyawan.length;
+    const activeEmployees = karyawan.filter(k => k.status === 'Aktif').length;
     const onLeave = karyawan.filter(k => k.status === 'Cuti').length;
+    const inactiveEmployees = karyawan.filter(k => k.status === 'Tidak Aktif').length;
     const pendingApprovals = cuti.filter(c => c.status === 'Menunggu').length;
     
     // Hitung karyawan baru bulan ini
@@ -218,16 +220,20 @@ export const fetchDashboardStats = async () => {
 
     return {
       totalEmployees,
+      activeEmployees,
       newThisMonth,
       onLeave,
+      inactiveEmployees,
       pendingApprovals
     };
   } catch (error) {
     console.error('Error fetching dashboard stats:', error);
     return {
       totalEmployees: 0,
+      activeEmployees: 0,
       newThisMonth: 0,
       onLeave: 0,
+      inactiveEmployees: 0,
       pendingApprovals: 0
     };
   }
