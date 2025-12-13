@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import './Index.css';
 import StatCard, { Users, UserPlus, CalendarOff, Clock } from '../../Components/Card/Card'; 
 import { fetchDashboardStats, fetchCuti, formatDate } from '../../utils/api';
-
-// --- KOMPONEN UTAMA INDEX ---
+// 1. IMPORT KOMPONEN CHART BARU
+import EmployeeChart from '../../Components/charts/EmployeeChart'; 
 
 const Index = () => {
   const [stats, setStats] = useState({
@@ -17,23 +17,27 @@ const Index = () => {
   const [upcomingLeave, setUpcomingLeave] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const userName = "Admin"; // Bisa diganti dengan data dari localStorage/session
+  const userName = "Admin"; 
 
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
-      const dashboardStats = await fetchDashboardStats();
-      const cutiData = await fetchCuti();
-      
-      // Filter cuti yang akan datang (status disetujui dan tanggal >= hari ini)
-      const today = new Date();
-      const upcoming = cutiData
-        .filter(c => c.status === 'Disetujui' && new Date(c.tanggal_mulai) >= today)
-        .slice(0, 5);
-      
-      setStats(dashboardStats);
-      setUpcomingLeave(upcoming);
-      setIsLoading(false);
+      try {
+        const dashboardStats = await fetchDashboardStats();
+        const cutiData = await fetchCuti();
+        
+        const today = new Date();
+        const upcoming = cutiData
+          .filter(c => c.status === 'Disetujui' && new Date(c.tanggal_mulai) >= today)
+          .slice(0, 5);
+        
+        setStats(dashboardStats);
+        setUpcomingLeave(upcoming);
+      } catch (error) {
+        console.error("Gagal memuat dashboard:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
     
     loadData();
@@ -49,6 +53,7 @@ const Index = () => {
       </header>
 
       <div className="page-content">
+        {/* --- STATISTIC CARDS --- */}
         <div className="stats-grid">
           <StatCard
             title="Total Karyawan"
@@ -76,14 +81,19 @@ const Index = () => {
           />
         </div>
 
+        {/* --- CHARTS & ACTIVITY ROW --- */}
         <div className="charts-row">
+          
+          {/* 2. GANTI PLACEHOLDER DENGAN CHART ASLI */}
           <div className="chart-container dashboard-card">
             <h3>Jumlah Karyawan Per Divisi</h3>
             <p className="subtitle">Total karyawan di setiap departemen</p>
-            <div className="placeholder-content placeholder-chart">
-              <p>Belum ada data karyawan (Chart)</p>
-            </div>
+            
+            {/* Render Komponen Chart Disini */}
+            <EmployeeChart />
+            
           </div>
+
           <div className="activity-card dashboard-card">
             <h3>Ringkasan</h3>
             <p className="subtitle">Statistik sistem HR</p>
@@ -104,6 +114,7 @@ const Index = () => {
           </div>
         </div>
 
+        {/* --- UPCOMING LEAVE --- */}
         <div className="schedule-card dashboard-card">
           <h3>Jadwal Cuti Mendatang</h3>
           <p className="subtitle">Rencana cuti yang sudah disetujui</p>

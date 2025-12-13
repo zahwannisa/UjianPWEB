@@ -252,3 +252,15 @@ export const formatDate = (dateString) => {
     year: 'numeric'
   });
 };
+
+// --- SERVICE DASHBOARD ---
+export const getDashboardStats = async () => {
+  try {
+    const response = await fetch(`${API_BASE}/divisi/stats`);
+    if (!response.ok) throw new Error('Gagal mengambil data statistik');
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    throw error; // Return array kosong jika error agar chart tidak crash
+  }
+};

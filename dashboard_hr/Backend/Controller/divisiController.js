@@ -120,3 +120,19 @@ export const deleteDivisi = async (req, res) => {
     res.status(500).json({ message: 'Gagal menghapus divisi', error: error.message });
   }
 };
+
+export const getDivisiStats = async (req, res) => {
+  try {
+    // Query menghitung jumlah karyawan (count) dan dikelompokkan berdasarkan nama divisi
+    const [rows] = await db.query(`
+      SELECT d.nama_divisi, COUNT(k.id) as total 
+      FROM tabel_divisi d
+      LEFT JOIN tabel_karyawan k ON d.id = k.id_divisi
+      GROUP BY d.id, d.nama_divisi
+    `);
+    res.json(rows);
+  } catch (error) {
+    console.error("Error stats:", error);
+    res.status(500).json({ message: "Gagal mengambil statistik", error: error.message });
+  }
+};
