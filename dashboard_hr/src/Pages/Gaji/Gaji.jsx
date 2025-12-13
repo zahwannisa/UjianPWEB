@@ -65,10 +65,10 @@ const Gaji = () => {
               <th>Nama Karyawan</th>
               <th>Divisi</th>
               <th>Periode</th>
-              <th className="text-right">Gaji Pokok</th>
-              <th className="text-right">Tunjangan</th>
-              <th className="text-right">Potongan</th>
-              <th className="text-right">Gaji Bersih</th>
+              <th>Gaji Pokok</th>
+              <th>Tunjangan</th>
+              <th>Potongan</th>
+              <th>Gaji Bersih</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -81,10 +81,10 @@ const Gaji = () => {
                     <td>{sal.nama}</td>
                     <td>{sal.divisi}</td>
                     <td>{sal.periode}</td>
-                    <td className="text-right">{formatRupiah(sal.gajiPokok)}</td>
-                    <td className="text-right">{formatRupiah(sal.tunjangan)}</td>
-                    <td className="text-right text-danger">{formatRupiah(sal.potongan)}</td>
-                    <td className="text-right text-success font-bold">{formatRupiah(gajiBersih)}</td>
+                    <td>{formatRupiah(sal.gajiPokok)}</td>
+                    <td>{formatRupiah(sal.tunjangan)}</td>
+                    <td className="text-danger">{formatRupiah(sal.potongan)}</td>
+                    <td className="text-success font-bold">{formatRupiah(gajiBersih)}</td>
                     <td>
                       <button className="btn-action view">Detail Slip</button>
                     </td>
