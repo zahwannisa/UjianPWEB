@@ -170,13 +170,23 @@ p.stat-label {
 
 /* Card Wrapper */
 .gaji-table-container {
+    justify-content: space-between;
+    align-items: center;
     padding: 1.5rem;
     border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     background-color: var(--color-card-background);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     border: 1px solid var(--color-border);
-    overflow-x: auto;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
+
+.stat-icon-gaji {
+    height: 40px;
+    width: 40px;
+    color: #022c8f;
+}
+
+
 
 /* Tabel Gaji */
 .gaji-table {

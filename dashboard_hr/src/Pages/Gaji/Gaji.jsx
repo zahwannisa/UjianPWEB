@@ -7,6 +7,12 @@ import { toast } from 'sonner';
 import Model from '../../Components/model/model';
 import SelectKaryawan from '../../Forms/SelectKaryawan/SelectKaryawan';
 import EditGaji from '../../Forms/EditGaji/EditGaji';
+import { FaCheckCircle } from "react-icons/fa";
+import { IoTime } from "react-icons/io5";
+import { MdAccountBalance } from "react-icons/md";
+import { BsCash } from "react-icons/bs";
+
+
 
 const Gaji = () => {
   const [salaries, setSalaries] = useState([]);
@@ -118,25 +124,25 @@ const Gaji = () => {
       {/* Stat Cards */}
       <div className="stats-container">
         <div className="stat-card_gaji total-payroll">
-          <div className="stat-icon">💰</div>
+          <div className="stat-icon"></div><MdAccountBalance className='stat-icon-gaji'/>
           <p className="stat-label">Total Payroll</p>
           <h3 className="stat-value">{formatRupiah(totalPayroll)}</h3>
         </div>
 
         <div className="stat-card_gaji sudah-dibayar">
-          <div className="stat-icon">✓</div>
+          <div className="stat-icon"></div><FaCheckCircle className='stat-icon-gaji'/>
           <p className="stat-label">Sudah Dibayar</p>
           <h3 className="stat-value">{sudahDibayar}</h3>
         </div>
 
         <div className="stat-card_gaji pending">
-          <div className="stat-icon">⏳</div>
+          <div className="stat-icon"></div><IoTime className='stat-icon-gaji'/>
           <p className="stat-label">Pending</p>
           <h3 className="stat-value">{pending}</h3>
         </div>
 
         <div className="stat-card_gaji rata-rata">
-          <div className="stat-icon">$</div>
+          <div className="stat-icon"></div><BsCash className='stat-icon-gaji'/>
           <p className="stat-label">Rata-rata Gaji</p>
           <h3 className="stat-value">{formatRupiah(rataRataGaji)}</h3>
         </div>
