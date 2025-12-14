@@ -158,7 +158,7 @@ const Gaji = () => {
             <option>Proses</option>
             <option>Pending</option>
           </select>
-          <span className="filter-info">Menampilkan {filteredSalaries.length} dari {salaries.length} data</span>
+          <span className="filter-info">Menampilkan {filteredSalaries.length} dari {salaries.length} data gaji karyawan</span>
         </div>
       </div>
 

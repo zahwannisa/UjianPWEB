@@ -118,7 +118,6 @@ p.stat-label {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 1rem;
     background: white;
     border-radius: 6px;
     border: 1px solid #e5e7eb;
@@ -127,6 +126,7 @@ p.stat-label {
 
 .filter-icon {
     font-size: 18px;
+    margin-left: 10px;
 }
 
 .filter-select {
@@ -145,7 +145,7 @@ p.stat-label {
 }
 
 .filter-info {
-    margin-left: auto;
+    margin-left: 80px;
     font-size: 13px;
     color: #6b7280;
 }
